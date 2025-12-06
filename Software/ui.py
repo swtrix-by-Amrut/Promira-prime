@@ -1,0 +1,88 @@
+import dearpygui.dearpygui as dpg
+import sys,os
+from ctypes import windll
+windll.shcore.SetProcessDpiAwareness(1)
+
+
+if not os.path.exists(os.path.join (os.getcwd(),'font' )):
+    print ('font folder doesn\'t exist.. Quitting program')
+    raise SystemExit()
+
+dpg.create_context()
+with dpg.window(tag="mainWindow", pos=(0, 0), no_resize = False) as win1:
+
+
+
+
+
+        pushButton = dpg.add_button(tag= 'pushButton',label="VBATT",pos=(30, 20),width=111,height=61,)
+        pushButton_2 = dpg.add_button(tag= 'pushButton_2',label="USB",pos=(30, 90),width=111,height=61,)
+        pushButton_3 = dpg.add_button(tag= 'pushButton_3',label="KYPD button",pos=(30, 230),width=111,height=61,)
+        pushButton_4 = dpg.add_button(tag= 'pushButton_4',label="Volume Up",pos=(30, 300),width=111,height=61,)
+        pushButton_5 = dpg.add_button(tag= 'pushButton_5',label="Volume Down",pos=(30, 370),width=111,height=61,)
+        pushButton_6 = dpg.add_button(tag= 'pushButton_6',label="Clean PowerUp",pos=(210, 60),width=141,height=61,)
+        pushButton_7 = dpg.add_button(tag= 'pushButton_7',label="Power OFF",pos=(210, 130),width=141,height=61,)
+        pushButton_8 = dpg.add_button(tag= 'pushButton_8',label="boot to EDL",pos=(210, 200),width=141,height=61,)
+        pushButton_9 = dpg.add_button(tag= 'pushButton_9',label="EDL mode",pos=(30, 160),width=111,height=61,)
+        lineEdit = dpg.add_input_text(tag= 'lineEdit',multiline= False,pos=(210, 320),width=141,height=31,)
+        textEdit = dpg.add_input_text(tag= 'textEdit',multiline= True,pos=(410, 110),width=151,height=321,)
+        label = dpg.add_text(tag='label',default_value = "Sequences",pos=(210, 20),)
+        pushButton_11 = dpg.add_button(tag= 'pushButton_11',label="Refresh",pos=(410, 60),width=151,height=41,)
+        pushButton_13 = dpg.add_button(tag= 'pushButton_13',label="Write",pos=(210, 360),width=141,height=31,)
+        pushButton_14 = dpg.add_button(tag= 'pushButton_14',label="Read",pos=(210, 400),width=141,height=31,)
+        label_11 = dpg.add_text(tag='label_11',default_value = "Not Connected",pos=(420, 20),)
+        pushButton_12 = dpg.add_button(tag= 'pushButton_12',label="?",pos=(310, 20),width=41,height=31,)
+
+dpg.create_viewport(title='MainWindow', width=613, height=597)
+
+with dpg.theme() as global_theme:
+    with dpg.theme_component(dpg.mvAll):
+        dpg.add_theme_color(dpg.mvThemeCol_WindowBg, (255, 230, 196), category=dpg.mvThemeCat_Core)
+        dpg.add_theme_color(dpg.mvThemeCol_ChildBg, (255, 255, 255), category=dpg.mvThemeCat_Core)
+        dpg.add_theme_color(dpg.mvThemeCol_Text, (0, 0, 0), category=dpg.mvThemeCat_Core)
+        dpg.add_theme_color(dpg.mvThemeCol_PopupBg, (255, 255, 255), category=dpg.mvThemeCat_Core)
+        dpg.add_theme_color(dpg.mvThemeCol_Border, (141,139,139), category=dpg.mvThemeCat_Core)
+        dpg.add_theme_color(dpg.mvThemeCol_FrameBg, (255, 255, 255), category=dpg.mvThemeCat_Core)
+        dpg.add_theme_color(dpg.mvThemeCol_ScrollbarBg, (192, 179, 197), category=dpg.mvThemeCat_Core)
+        dpg.add_theme_color(dpg.mvThemeCol_ScrollbarGrab, (137, 129, 129), category=dpg.mvThemeCat_Core)
+        dpg.add_theme_color(dpg.mvThemeCol_Button, (208, 208, 220), category=dpg.mvThemeCat_Core)
+        dpg.add_theme_color(dpg.mvThemeCol_ButtonHovered, (179, 208, 138), category=dpg.mvThemeCat_Core)
+        dpg.add_theme_color(dpg.mvThemeCol_Tab, (196, 196, 196), category=dpg.mvThemeCat_Core)
+        dpg.add_theme_color(dpg.mvThemeCol_BorderShadow, (168, 161, 161), category=dpg.mvThemeCat_Core)
+        dpg.add_theme_color(dpg.mvThemeCol_TitleBg, (0,0,0), category=dpg.mvThemeCat_Core)
+        
+        dpg.add_theme_style(dpg.mvStyleVar_FrameRounding, 7, category=dpg.mvThemeCat_Core)
+        dpg.add_theme_style(dpg.mvStyleVar_FrameBorderSize, 1, category=dpg.mvThemeCat_Core)
+dpg.bind_item_theme(win1, global_theme)
+
+with dpg.font_registry() as win1_font_registry:
+    regular_font = dpg.add_font('font/glacial_font.otf', 16)
+
+dpg.bind_item_font(win1, regular_font)
+
+def clean_up():
+    retention_list = ['retention_list', 'this', 'obj_dict','layout','','']
+    this = sys.modules[__name__]
+    for n in dir():
+        if n not in retention_list:  delattr(this, n)
+    del this, retention_list, n
+def gui_kick_off():
+    dpg.setup_dearpygui()
+    dpg.show_viewport()
+    dpg.set_primary_window("mainWindow", True)
+    dpg.start_dearpygui()
+    dpg.stop_dearpygui()
+    dpg.destroy_context()
+
+if __name__ == '__main__':
+    gui_kick_off()
+    # clean_up(),
+'''
+
+cleanup_dearpygui() -- old deprecated function that just works
+instead of dpg.destroy_context()
+
+
+or do dpg.remove_alias("pushButton_7") for every widget there is
+
+'''
